@@ -8,21 +8,34 @@ const app = express();
 app.use(bodyParser.json());
 
 
-// //config bd
-// const connection = mysql.createConnection({
-//   host: 'db',
-//   user: 'root',
-//   password: 'password',
-//   database: 'mydb',
-// });
+// 
+
 
 //config bd
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'labo',
-  });
+
+try {
+    const connection = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: 'root',
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+    });
+    
+} catch (error) {
+    console.log(error)
+    setTimeout(()=>{
+
+        const connection = mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: 'root',
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
+        });
+        
+    },3000)
+}
+
+ 
 
 
 //insertion 

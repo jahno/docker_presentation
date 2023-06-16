@@ -1,5 +1,15 @@
 version: '3'
 services:
+
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=mydb
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
   app:
     build: .
     ports:
@@ -11,15 +21,9 @@ services:
       - DB_USER=root
       - DB_PASSWORD=secret
       - DB_NAME=mydb
+    restart: unless-stopped
 
-  db:
-    image: mysql:latest
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=mydb
-    volumes:
-      - dbdata:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
 
 volumes:
   dbdata:
