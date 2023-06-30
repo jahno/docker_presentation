@@ -10,11 +10,11 @@ app.use(bodyParser.json());
 
 // 
 
-
+var connection;
 //config bd
 
 try {
-    const connection = mysql.createConnection({
+      connection = mysql.createConnection({
         host: process.env.DB_HOST,
         user: 'root',
         password: process.env.DB_PASSWORD,
@@ -25,7 +25,7 @@ try {
     console.log(error)
     setTimeout(()=>{
 
-        const connection = mysql.createConnection({
+          connection = mysql.createConnection({
             host: process.env.DB_HOST,
             user: 'root',
             password: process.env.DB_PASSWORD,
